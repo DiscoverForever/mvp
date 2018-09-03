@@ -8,6 +8,7 @@ import android.content.Context
 import android.graphics.Color
 import android.view.Gravity
 import com.missfresh.moon.kttest.unit.login.DbActivity
+import com.missfresh.moon.kttest.unit.login.LoginActivity
 
 
 class MainActivity() : AppCompatActivity() {
@@ -23,7 +24,7 @@ class MainActivity() : AppCompatActivity() {
         this.getSystemService(Context.CONNECTIVITY_SERVICE)
 //        toast(NetWorkUtils.isNetworkConnected(this).toString())
         Handler().postDelayed({
-           startActivity<DbActivity>()
+           startActivity<LoginActivity>()
         }, 3000)
     }
 }

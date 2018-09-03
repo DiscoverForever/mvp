@@ -105,6 +105,8 @@ class LoginActivity() : BaseActivity(), LoginContract.View {
 
         } else if (password == "") {
             toast("密码不能为空")
+        } else {
+            toast("用户名或密码错误")
         }
 
         return isValiable
