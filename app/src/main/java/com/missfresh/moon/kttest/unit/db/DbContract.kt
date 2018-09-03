@@ -1,4 +1,4 @@
-package com.missfresh.moon.kttest.unit.login
+package com.missfresh.moon.kttest.unit.db
 
 import com.missfresh.moon.kttest.base.BasePresenter
 import com.missfresh.moon.kttest.base.BaseView

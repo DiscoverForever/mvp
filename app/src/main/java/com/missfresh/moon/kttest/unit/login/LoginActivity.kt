@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import com.missfresh.moon.kttest.R
 import com.missfresh.moon.kttest.base.BaseActivity
 import com.missfresh.moon.kttest.constant.Color
+import com.missfresh.moon.kttest.unit.db.DbActivity
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 

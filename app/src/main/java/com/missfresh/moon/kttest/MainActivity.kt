@@ -7,7 +7,6 @@ import org.jetbrains.anko.*
 import android.content.Context
 import android.graphics.Color
 import android.view.Gravity
-import com.missfresh.moon.kttest.unit.login.DbActivity
 import com.missfresh.moon.kttest.unit.login.LoginActivity
 
 
