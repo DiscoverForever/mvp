@@ -1,15 +1,18 @@
 package com.missfresh.moon.kttest.unit.db
 
+import android.app.Dialog
 import android.content.Context
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.view.View
+import android.widget.*
+import com.missfresh.moon.kttest.R
 import com.missfresh.moon.kttest.base.BaseActivity
 import com.missfresh.moon.kttest.crud.UserDaoOpe
 import com.missfresh.moon.kttest.entity.user.User
+import com.missfresh.moon.kttest.utils.DialogUtils
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
@@ -18,6 +21,9 @@ class DbActivity() : BaseActivity(), DbContract.View {
     private lateinit var etName: EditText
     private lateinit var etAge: EditText
     private lateinit var mContext: Context
+    private lateinit var lvUser: ListView
+    private lateinit var tvTips: TextView
+    private lateinit var vtly: LinearLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mContext = this
@@ -67,24 +73,53 @@ class DbActivity() : BaseActivity(), DbContract.View {
                     var user = User()
                     user.name = etName.text?.toString()
                     user.age = etAge.text?.toString()
-                    UserDaoOpe.getInstance().insertData(mContext, user)
+                    UserDaoOpe().createUser(mContext, user)
                 }
             }
             button("删除") {
-                onClick { }
+                onClick {
+                    UserDaoOpe().deleteUserById(mContext, 1)
+                }
             }
             button("修改") {
-                onClick { }
+                onClick {
+                    DialogUtils.showDialog(mContext, "提示", "是否确认补货完成？确认后无法修改", fun() {
+                        toast("确定")
+                    }, fun() {
+                        toast("取消")
+                    })
+                }
             }
             button("查询") {
                 onClick {
-                    var user = UserDaoOpe.getInstance().queryById(mContext, 1)
+                    var user = UserDaoOpe().getUserById(mContext, 1)
                     Log.d("name", user?.name)
                     Log.d("age", user?.age)
+                    lvUser.adapter = ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, arrayListOf<String>("1", "2", "3"))
+                }
+            }
+            vtly = verticalLayout {
+                lvUser = listView()
+                linearLayout() {
+                    tvTips = textView("系统未检测出临期过期商品，您可手动扫码添加报损商品")
+                }.lparams {
+                    gravity = Gravity.CENTER
+                    width = matchParent
+                    height = dip(150)
                 }
             }
         }
 
+    }
+
+    fun toggleTips() {
+        if (vtly.visibility === View.INVISIBLE) {
+            vtly.visibility = View.VISIBLE
+
+        } else {
+            vtly.visibility = View.INVISIBLE
+
+        }
     }
 
 

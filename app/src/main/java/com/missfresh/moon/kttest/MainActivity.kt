@@ -21,7 +21,7 @@ class MainActivity() : AppCompatActivity() {
                 textColor = Color.BLUE
             }
         }
-        this.getSystemService(Context.CONNECTIVITY_SERVICE)
+//        this.getSystemService(Context.CONNECTIVITY_SERVICE)
 //        toast(NetWorkUtils.isNetworkConnected(this).toString())
 //        Handler().postDelayed({
 //           startActivity<LoginActivity>()
