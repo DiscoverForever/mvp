@@ -6,17 +6,27 @@ import android.os.Handler
 import org.jetbrains.anko.*
 import android.content.Context
 import android.graphics.Color
+import android.os.Message
 import android.view.Gravity
+import android.widget.TextView
+import com.missfresh.moon.kttest.event.LoginEvent
+import com.missfresh.moon.kttest.event.MessageEvent
 import com.missfresh.moon.kttest.unit.db.DbActivity
 import com.missfresh.moon.kttest.unit.login.LoginActivity
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 class MainActivity() : AppCompatActivity() {
+    private lateinit var tv: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        EventBus.getDefault().register(this)
+        EventBus.getDefault().post(LoginEvent("tyy"))
         relativeLayout() {
             gravity = Gravity.CENTER
-            textView("Welcome to Kotlin") {
+            tv = textView("Welcome to Kotlin") {
                 textSize = 30.toFloat()
                 textColor = Color.BLUE
             }
@@ -27,6 +37,16 @@ class MainActivity() : AppCompatActivity() {
 //           startActivity<LoginActivity>()
             startActivity<DbActivity>()
 //        }, 3000)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    open fun onMessageEvent(message: MessageEvent) {
+        tv.text = message.message
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
     }
 }
 

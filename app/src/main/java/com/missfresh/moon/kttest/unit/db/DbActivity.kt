@@ -12,7 +12,12 @@ import com.missfresh.moon.kttest.R
 import com.missfresh.moon.kttest.base.BaseActivity
 import com.missfresh.moon.kttest.crud.UserDaoOpe
 import com.missfresh.moon.kttest.entity.user.User
+import com.missfresh.moon.kttest.event.LoginEvent
+import com.missfresh.moon.kttest.event.MessageEvent
 import com.missfresh.moon.kttest.utils.DialogUtils
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
@@ -26,6 +31,7 @@ class DbActivity() : BaseActivity(), DbContract.View {
     private lateinit var vtly: LinearLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        EventBus.getDefault().register(this)
         mContext = this
         verticalLayout() {
             linearLayout() {
@@ -85,6 +91,7 @@ class DbActivity() : BaseActivity(), DbContract.View {
                 onClick {
                     DialogUtils.showDialog(mContext, "提示", "是否确认补货完成？确认后无法修改", fun() {
                         toast("确定")
+                        EventBus.getDefault().post(MessageEvent("I come from DBActivity"))
                     }, fun() {
                         toast("取消")
                     })
@@ -120,6 +127,17 @@ class DbActivity() : BaseActivity(), DbContract.View {
             vtly.visibility = View.INVISIBLE
 
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    open fun onLoginEvent(loginEvent: LoginEvent) {
+        toast(loginEvent.message)
+        Log.d("LoginEvent", loginEvent.message)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
     }
 
 
