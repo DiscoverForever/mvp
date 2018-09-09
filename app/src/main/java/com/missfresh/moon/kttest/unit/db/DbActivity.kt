@@ -10,16 +10,24 @@ import android.view.View
 import android.widget.*
 import com.missfresh.moon.kttest.R
 import com.missfresh.moon.kttest.base.BaseActivity
+import com.missfresh.moon.kttest.crud.GoodsDaoOpe
 import com.missfresh.moon.kttest.crud.UserDaoOpe
+import com.missfresh.moon.kttest.entity.goods.Goods
 import com.missfresh.moon.kttest.entity.user.User
 import com.missfresh.moon.kttest.event.LoginEvent
 import com.missfresh.moon.kttest.event.MessageEvent
+import com.missfresh.moon.kttest.unit.goods.GoodsActivity
 import com.missfresh.moon.kttest.utils.DialogUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
+import java.util.*
+import java.util.Arrays.asList
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
+
 
 class DbActivity() : BaseActivity(), DbContract.View {
     override var presenter: DbPresenter = DbPresenter(this)
@@ -99,10 +107,24 @@ class DbActivity() : BaseActivity(), DbContract.View {
             }
             button("查询") {
                 onClick {
-                    var user = UserDaoOpe().getUserById(mContext, 1)
-                    Log.d("name", user?.name)
-                    Log.d("age", user?.age)
-                    lvUser.adapter = ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, arrayListOf<String>("1", "2", "3"))
+                    startActivity<GoodsActivity>()
+//                    var user = UserDaoOpe().getUserById(mContext, 1)
+//                    Log.d("name", user?.name)
+//                    Log.d("age", user?.age)
+//                    var data = mutableListOf<Map<String, Long>>()
+//                    getGoodsList().forEach {
+//                        var set = mutableMapOf<String, Long>("id" to it.id, "codeType" to it.codeType.toLong())
+//                        data.add(set)
+//                    }
+//                    lvUser.adapter = SimpleAdapter(mContext, data, R.layout.list_item, arrayOf("id", "codeType"), intArrayOf(R.id.tv1, R.id.tv2))
+//                    lvUser.adapter = ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, arrayListOf<String>("1", "2", "3"))
+                }
+            }
+            button("缓存盘点数据") {
+                onClick {
+                    GoodsDaoOpe().createGoods(this@DbActivity, getGoodsList())
+
+
                 }
             }
             vtly = verticalLayout {
@@ -140,5 +162,26 @@ class DbActivity() : BaseActivity(), DbContract.View {
         EventBus.getDefault().unregister(this)
     }
 
+    fun getGoodsList(): ArrayList<Goods> {
+        var goodsList = ArrayList<Goods>()
+        for (i in 11..20) {
+            var goods = Goods()
+            goods.id = i.toLong()
+            goods.shelfLay = 2
+            goods.layLine = 2
+            goods.goodsName = "华北红肉火龙果【品类水果】"
+            goods.goodsNo = "p-hbhrhlg-1g"
+            goods.picUrl = "https://image.missfresh.cn/731945401be04d6e87cda4d08401785e.jpeg"
+            goods.codeType = 2
+            goods.codeNo = "6000006"
+            goods.materialNo = "6000006"
+            goods.qualityType = 0
+            goods.operationDate = 1536031350385
+            goods.uniqueCode = 275
+            goodsList.add(goods)
+
+        }
+        return goodsList
+    }
 
 }

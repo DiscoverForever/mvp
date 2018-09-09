@@ -27,6 +27,7 @@
         </activity>
         <activity android:name=".ScanQrCode.ScanQrcodeActivity" />
         <activity android:name=".unit.db.DbActivity"></activity>
+        <activity android:name=".unit.goods.GoodsActivity"></activity>
         <activity android:name=".unit.login.LoginActivity"></activity>
     </application>
 
