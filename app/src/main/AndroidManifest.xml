@@ -3,6 +3,7 @@
     package="com.missfresh.moon.kttest">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -29,6 +30,12 @@
         <activity android:name=".unit.db.DbActivity"></activity>
         <activity android:name=".unit.goods.GoodsActivity"></activity>
         <activity android:name=".unit.login.LoginActivity"></activity>
+
+        <service android:name="com.missfresh.moon.kttest.service.NetworkStateService">
+            <intent-filter android:priority="1000">
+                <action android:name="com.missfresh.moon.kttest.service.NetworkStateService" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
