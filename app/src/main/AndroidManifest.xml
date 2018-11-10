@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.missfresh.moon.kttest">
+    package="com.mvp.moon.kttest">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -31,11 +31,13 @@
         <activity android:name=".unit.goods.GoodsActivity"></activity>
         <activity android:name=".unit.login.LoginActivity"></activity>
 
-        <service android:name="com.missfresh.moon.kttest.service.NetworkStateService">
+        <service android:name="com.mvp.moon.kttest.service.NetworkStateService">
             <intent-filter android:priority="1000">
-                <action android:name="com.missfresh.moon.kttest.service.NetworkStateService" />
+                <action android:name="com.mvp.moon.kttest.service.NetworkStateService" />
             </intent-filter>
         </service>
+        <service android:name=".service.TimingTaskService" />
+        <receiver android:name=".broadcastreceiver.AlarmReceiver" />
     </application>
 
 </manifest>
